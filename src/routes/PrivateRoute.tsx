@@ -1,24 +1,26 @@
 import React from 'react';
-
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 import names from './names';
 
 const PrivateRoute: React.FC<RouteProps> = (props) => {
-  const { children, ...rest } = props;
+  const { component: Component, ...rest } = props;
 
-  const auth = true;
+  const { isAuthenticated } = useAuth();
+
+  if (!Component) return null;
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        auth ? (
-          children
+      render={(props) =>
+        isAuthenticated() ? (
+          <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: names.login,
-              state: { from: location },
+              state: { from: props.location },
             }}
           />
         )
