@@ -1,10 +1,13 @@
 import React, { createContext } from 'react';
+import { toast } from 'react-toastify';
 import { User } from '../@types';
 import useLocalStorage from '../hooks/useLocalStorage';
+import authController from '../services/api/authController';
 
 interface AuthContextData {
-  user: User | ((value: User | ((val: User) => User)) => void);
-  token: string | ((value: string | ((val: string) => string)) => void);
+  user: User;
+  token: string;
+  signIn(email: string, password: string): void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -15,10 +18,23 @@ export const AuthProvider: React.FC = (props) => {
   const { children } = props;
 
   const [user] = useLocalStorage<User>('teste@user', {} as User);
-  const [token] = useLocalStorage<string>('teste@token', '');
+  const [token, setLocalStorageToken] = useLocalStorage<string>(
+    'teste@token',
+    ''
+  );
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { data } = await authController.signIn({ email, password });
+      setLocalStorageToken(data.token);
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro');
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ user, token }}>
+    <AuthContext.Provider value={{ user, token, signIn }}>
       {children}
     </AuthContext.Provider>
   );

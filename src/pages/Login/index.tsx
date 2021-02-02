@@ -1,7 +1,33 @@
-import { Center, Grid, Heading, Image, Input, VStack } from '@chakra-ui/react';
+import { Button, Center, Grid, Heading, Image, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import Input from '../../components/Input';
+import useAuth from '../../hooks/useAuth';
+import names from '../../routes/names';
+
+interface FormData {
+  email: string;
+  password: string;
+}
 
 const Login: React.FC = () => {
+  const { signIn } = useAuth();
+
+  const history = useHistory();
+
+  const { control, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    signIn(data.email, data.password);
+    history.push(names.root);
+  };
+
   return (
     <Grid
       backgroundColor="gray.900"
@@ -18,6 +44,7 @@ const Login: React.FC = () => {
         <Image src="/security.svg" />
       </Center>
       <VStack
+        as="form"
         gridArea="form"
         alignItems="flex-start"
         padding={2}
@@ -26,22 +53,19 @@ const Login: React.FC = () => {
         borderRadius="md"
         shadow="md"
         backgroundColor="white"
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Heading>Login</Heading>
-        <Input
-          placeholder="Email"
-          backgroundColor="gray.500"
-          borderRadius="md"
-          focusBorderColor="purple.600"
-          variant="outline"
-        />
+        <Input placeholder="Email" name="email" control={control} />
         <Input
           placeholder="Senha"
-          backgroundColor="gray.500"
-          borderRadius="md"
-          focusBorderColor="purple.600"
-          variant="outline"
+          name="password"
+          control={control}
+          type="password"
         />
+        <Button width="full" type="submit">
+          Login
+        </Button>
       </VStack>
     </Grid>
   );

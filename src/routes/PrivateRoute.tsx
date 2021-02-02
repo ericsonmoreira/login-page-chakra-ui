@@ -10,8 +10,6 @@ const PrivateRoute: React.FC<RouteProps> = (props) => {
 
   const isAuthenticated = !!user && !!token;
 
-  console.log(isAuthenticated);
-
   if (!Component) return null;
 
   return (
