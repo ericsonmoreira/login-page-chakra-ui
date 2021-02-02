@@ -1,18 +1,6 @@
-import useLocalStorage from './useLocalStorage';
+import { useContext } from 'react';
+import { AuthContext } from '../providers/auth';
 
-/**
- * Hook para tratar da autenticação de usuário.
- */
-function useAuth() {
-  const [token] = useLocalStorage('token', '');
+const useAuth = () => useContext(AuthContext);
 
-  const isAuthenticated = () => {
-    // TODO: saber se o token é válido
-    if (token) return true;
-    return false;
-  };
-
-  return { isAuthenticated };
-}
-
-export default useAuth;
+export default useAuth; 

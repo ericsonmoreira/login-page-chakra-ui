@@ -6,7 +6,11 @@ import names from './names';
 const PrivateRoute: React.FC<RouteProps> = (props) => {
   const { component: Component, ...rest } = props;
 
-  const { isAuthenticated } = useAuth();
+  const { user, token } = useAuth();
+
+  const isAuthenticated = !!user && !!token;
+
+  console.log(isAuthenticated);
 
   if (!Component) return null;
 
@@ -14,7 +18,7 @@ const PrivateRoute: React.FC<RouteProps> = (props) => {
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated() ? (
+        isAuthenticated ? (
           <Component {...props} />
         ) : (
           <Redirect
