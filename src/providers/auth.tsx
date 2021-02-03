@@ -8,6 +8,7 @@ interface AuthContextData {
   user: User;
   token: string;
   signIn(email: string, password: string): void;
+  signOut(): void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -33,8 +34,13 @@ export const AuthProvider: React.FC = (props) => {
     }
   };
 
+  // TODO: testando o logout
+  const signOut = async () => {
+    console.log('signOut');
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, signIn }}>
+    <AuthContext.Provider value={{ user, token, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
