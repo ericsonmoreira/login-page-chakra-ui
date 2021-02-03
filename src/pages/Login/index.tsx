@@ -1,10 +1,13 @@
 import { Button, Center, Grid, Heading, Image, VStack } from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import Input from '../../components/Input';
 import useAuth from '../../hooks/useAuth';
+import { LogInIcon } from '../../icons';
 import names from '../../routes/names';
+import schema from './schema';
 
 interface FormData {
   email: string;
@@ -16,11 +19,12 @@ const Login: React.FC = () => {
 
   const history = useHistory();
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, errors, handleSubmit } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: '',
     },
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: FormData) => {
@@ -56,14 +60,20 @@ const Login: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Heading>Login</Heading>
-        <Input placeholder="Email" name="email" control={control} />
+        <Input
+          placeholder="Email"
+          name="email"
+          control={control}
+          errors={errors}
+        />
         <Input
           placeholder="Senha"
           name="password"
-          control={control}
           type="password"
+          control={control}
+          errors={errors}
         />
-        <Button width="full" type="submit">
+        <Button width="full" rightIcon={<LogInIcon />} type="submit">
           Login
         </Button>
       </VStack>

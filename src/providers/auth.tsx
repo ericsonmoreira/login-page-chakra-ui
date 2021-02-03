@@ -2,6 +2,7 @@ import React, { createContext } from 'react';
 import { toast } from 'react-toastify';
 import { User } from '../@types';
 import useLocalStorage from '../hooks/useLocalStorage';
+import api from '../services/api';
 import authController from '../services/api/authController';
 
 interface AuthContextData {
@@ -28,6 +29,7 @@ export const AuthProvider: React.FC = (props) => {
     try {
       const { data } = await authController.signIn({ email, password });
       setLocalStorageToken(data.token);
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
     } catch (error) {
       console.error(error);
       toast.error('Erro');
@@ -37,6 +39,8 @@ export const AuthProvider: React.FC = (props) => {
   // TODO: testando o logout
   const signOut = async () => {
     console.log('signOut');
+    setLocalStorageToken('');
+    delete api.defaults.headers.common.Authorization;
   };
 
   return (
