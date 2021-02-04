@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = (props) => {
       {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
       <ChakraInput
         backgroundColor="gray.500"
-        borderRadius="md"
+        borderRadius="full"
         focusBorderColor="purple.600"
         variant="outline"
         ref={ref}

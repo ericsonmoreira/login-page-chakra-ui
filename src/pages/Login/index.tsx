@@ -15,7 +15,12 @@ const Login: React.FC = () => {
 
   const history = useHistory();
 
-  const { control, errors, handleSubmit } = useForm<LoginFormData>({
+  const {
+    control,
+    errors,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<LoginFormData>({
     defaultValues: {
       email: '',
       password: '',
@@ -70,7 +75,13 @@ const Login: React.FC = () => {
           control={control}
           errors={errors}
         />
-        <Button width="full" rightIcon={<LogInIcon />} type="submit">
+        <Button
+          width="full"
+          colorScheme="green"
+          rightIcon={<LogInIcon />}
+          type="submit"
+          isLoading={isSubmitting}
+        >
           Login
         </Button>
       </VStack>
