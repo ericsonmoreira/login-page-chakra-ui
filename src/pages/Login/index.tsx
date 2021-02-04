@@ -3,31 +3,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import Input from '../../components/Input';
-import useAuth from '../../hooks/useAuth';
-import { LogInIcon } from '../../icons';
-import names from '../../routes/names';
+import Input from 'components/Input';
+import useAuth from 'hooks/useAuth';
+import { LogInIcon } from 'icons';
+import names from 'routes/names';
 import schema from './schema';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { LoginFormData } from './types';
 
 const Login: React.FC = () => {
   const { signIn } = useAuth();
 
   const history = useHistory();
 
-  const { control, errors, handleSubmit } = useForm<FormData>({
+  const { control, errors, handleSubmit } = useForm<LoginFormData>({
     defaultValues: {
       email: '',
       password: '',
     },
+    mode: 'all',
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: LoginFormData) => {
     signIn(data.email, data.password);
     history.push(names.root);
   };

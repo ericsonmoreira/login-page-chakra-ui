@@ -1,9 +1,9 @@
 import { Button, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import { LogOutIcon } from '../../icons';
-import names from '../../routes/names';
+import useAuth from 'hooks/useAuth';
+import { LogOutIcon } from 'icons';
+import names from 'routes/names';
 
 const Home: React.FC = () => {
   const history = useHistory();
@@ -19,7 +19,11 @@ const Home: React.FC = () => {
   return (
     <VStack>
       <Text>Home</Text>
-      <Button variant="outline" rightIcon={<LogOutIcon />} onClick={handleSignOut} >
+      <Button
+        variant="outline"
+        rightIcon={<LogOutIcon />}
+        onClick={handleSignOut}
+      >
         Sign Out
       </Button>
     </VStack>
