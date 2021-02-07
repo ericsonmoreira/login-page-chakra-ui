@@ -29,6 +29,7 @@ function useLocalStorage<T>(
   const removeValue = () => {
     try {
       window.localStorage.removeItem(key);
+      setStoredValue(initialValue);
     } catch (error) {
       console.log(error);
     }

@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       email: '',
       password: '',
     },
-    mode: 'all',
+    mode: 'onSubmit',
     resolver: yupResolver(schema),
   });
 
@@ -65,6 +65,7 @@ const Login: React.FC = () => {
         <Input
           placeholder="Email"
           name="email"
+          type="email"
           control={control}
           errors={errors}
         />

@@ -5,6 +5,7 @@ import {
   Input as ChakraInput,
   InputProps as ChakraInputProps,
 } from '@chakra-ui/react';
+import { ErrorMessage } from '@hookform/error-message';
 import React from 'react';
 import { Control, useController } from 'react-hook-form';
 
@@ -38,11 +39,7 @@ const Input: React.FC<InputProps> = (props) => {
         {...inputProps}
         {...rest}
       />
-      {errors && (
-        <FormErrorMessage>
-          {errors[name] && errors[name].message}
-        </FormErrorMessage>
-      )}
+      <ErrorMessage errors={errors} name={name} as={FormErrorMessage} />
     </FormControl>
   );
 };

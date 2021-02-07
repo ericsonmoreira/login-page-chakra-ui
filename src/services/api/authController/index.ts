@@ -9,5 +9,5 @@ export default {
   },
   get(): Promise<AxiosResponse<User[]>> {
     return api.get('/user');
-  }
+  },
 };

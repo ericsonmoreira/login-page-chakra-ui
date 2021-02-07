@@ -8,6 +8,8 @@ const PrivateRoute: React.FC<RouteProps> = (props) => {
 
   const { token, user, isSubmiting } = useAuth();
 
+  console.log(token, user);
+
   if (!Component || isSubmiting) return null;
 
   return (
